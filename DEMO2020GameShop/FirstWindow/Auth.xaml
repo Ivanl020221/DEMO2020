@@ -1,0 +1,53 @@
+﻿<Page x:Class="DEMO2020GameShop.FirstWindow.Auth"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DEMO2020GameShop.FirstWindow"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Авторизация">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock>Авторизация</TextBlock>
+        <GroupBox Grid.Row="1" Header="Логин">
+            <ComboBox IsEditable="True" x:Name="Login"/>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Пароль">
+            <TextBox x:Name="Pass"/>
+        </GroupBox>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="capchShow" IsEnabled="True"></TextBox>
+            <Button Grid.Column="1" Style="{StaticResource IconButton}" Click="Reset" >
+                Обновить
+            </Button>
+        </Grid>
+        <GroupBox Header="Капчта" Grid.Row="4">
+            <TextBox x:Name="CapchText"/>
+        </GroupBox>
+        <CheckBox x:Name="SaveMe" Grid.Row="5">Запомнить меня</CheckBox>
+        <Button Grid.Row="6" Style="{StaticResource  IconButton}" Click="GoToReg">Регистрация</Button>
+        <Grid Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Click="LogInSystem">Войти</Button>
+            <Button Grid.Column="1" Click="Exit">Отмена</Button>
+        </Grid>
+    </Grid>
+</Page>
