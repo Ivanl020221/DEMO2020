@@ -32,6 +32,7 @@ namespace DEMO2020GameShop.Model
         public string Login { get; set; }
         public string Password { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public Nullable<long> Region { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chatroomUser> chatroomUser { get; set; }
@@ -43,6 +44,7 @@ namespace DEMO2020GameShop.Model
         public virtual ICollection<gamelib> gamelib { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<messageChatroom> messageChatroom { get; set; }
+        public virtual Region Region1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wallet> wallet { get; set; }
     }

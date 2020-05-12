@@ -12,7 +12,7 @@ namespace DEMO2020GameShop.FirstWindow.Helpers
     {
         DEMO2020Entities context = new DEMO2020Entities();
 
-        private readonly string path = $"{AppDomain.CurrentDomain.BaseDirectory}/auth.txt";
+        private static readonly string path = $"{AppDomain.CurrentDomain.BaseDirectory}/auth.txt";
 
         public user AuthSaveUser()
         {
@@ -22,6 +22,11 @@ namespace DEMO2020GameShop.FirstWindow.Helpers
                 return Auth(userdata[0], userdata[1]);
             }
             return null;
+        }
+
+        public static bool IsRemember()
+        {
+            return File.Exists(path);
         }
 
         public void AuthCreateFile(string login, string pass)

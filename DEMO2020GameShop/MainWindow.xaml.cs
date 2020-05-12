@@ -31,8 +31,9 @@ namespace DEMO2020GameShop
             if (e.Content is Page page)
             {
                 this.Title = page.Title;
+                
             }
-            
+
         }
     }
 }

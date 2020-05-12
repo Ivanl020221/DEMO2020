@@ -51,7 +51,7 @@
           <Property Name="Info" Type="nvarchar" MaxLength="50" />
           <Property Name="Date" Type="date" />
           <Property Name="Logo1" Type="nvarchar" MaxLength="50" />
-          <Property Name="Logo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Logo" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="gameCategory">
           <Key>
@@ -92,7 +92,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
           <Property Name="region" Type="bigint" Nullable="false" />
           <Property Name="game" Type="bigint" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="10" Scale="4" Nullable="false" />
@@ -128,6 +128,7 @@
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Region" Type="bigint" />
         </EntityType>
         <EntityType Name="wallet">
           <Key>
@@ -294,6 +295,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_user_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_wallet_user">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="wallet" Type="Self.wallet" Multiplicity="*" />
@@ -374,6 +387,10 @@
             <End Role="gamelib" EntitySet="gamelib" />
             <End Role="session" EntitySet="session" />
           </AssociationSet>
+          <AssociationSet Name="FK_user_Region" Association="Self.FK_user_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
           <AssociationSet Name="FK_wallet_user" Association="Self.FK_wallet_user">
             <End Role="user" EntitySet="user" />
             <End Role="wallet" EntitySet="wallet" />
@@ -451,6 +468,10 @@
             <End Role="Region" EntitySet="Region" />
             <End Role="regionGame" EntitySet="regionGame" />
           </AssociationSet>
+          <AssociationSet Name="FK_user_Region" Association="DEMO2020Model.FK_user_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
           <AssociationSet Name="FK_wallet_user" Association="DEMO2020Model.FK_wallet_user">
             <End Role="user" EntitySet="user" />
             <End Role="wallet" EntitySet="wallet" />
@@ -509,7 +530,7 @@
           <Property Name="Info" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Logo1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="gameCategory" Relationship="DEMO2020Model.FK_gameCategory_game" FromRole="game" ToRole="gameCategory" />
           <NavigationProperty Name="gamelib" Relationship="DEMO2020Model.FK_gamelib_game" FromRole="game" ToRole="gamelib" />
           <NavigationProperty Name="regionGame" Relationship="DEMO2020Model.FK_regionGame_game" FromRole="game" ToRole="regionGame" />
@@ -555,12 +576,13 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="regionGame" Relationship="DEMO2020Model.FK_regionGame_Region" FromRole="Region" ToRole="regionGame" />
+          <NavigationProperty Name="user" Relationship="DEMO2020Model.FK_user_Region" FromRole="Region" ToRole="user" />
         </EntityType>
         <EntityType Name="regionGame">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
           <Property Name="region" Type="Int64" Nullable="false" />
           <Property Name="game" Type="Int64" Nullable="false" />
           <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
@@ -600,11 +622,13 @@
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Region" Type="Int64" />
           <NavigationProperty Name="chatroomUser" Relationship="DEMO2020Model.FK_chatroomUser_user" FromRole="user" ToRole="chatroomUser" />
           <NavigationProperty Name="friends" Relationship="DEMO2020Model.FK_friends_user" FromRole="user" ToRole="friends" />
           <NavigationProperty Name="friends1" Relationship="DEMO2020Model.FK_friends_user1" FromRole="user" ToRole="friends" />
           <NavigationProperty Name="gamelib" Relationship="DEMO2020Model.FK_gamelib_user" FromRole="user" ToRole="gamelib" />
           <NavigationProperty Name="messageChatroom" Relationship="DEMO2020Model.FK_messageChatroom_user" FromRole="user" ToRole="messageChatroom" />
+          <NavigationProperty Name="Region1" Relationship="DEMO2020Model.FK_user_Region" FromRole="user" ToRole="Region" />
           <NavigationProperty Name="wallet" Relationship="DEMO2020Model.FK_wallet_user" FromRole="user" ToRole="wallet" />
         </EntityType>
         <EntityType Name="wallet">
@@ -773,6 +797,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_user_Region">
+          <End Type="DEMO2020Model.Region" Role="Region" Multiplicity="0..1" />
+          <End Type="DEMO2020Model.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="Region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_wallet_user">
           <End Type="DEMO2020Model.user" Role="user" Multiplicity="1" />
           <End Type="DEMO2020Model.wallet" Role="wallet" Multiplicity="*" />
@@ -785,7 +821,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -919,6 +955,7 @@
           <EntitySetMapping Name="user">
             <EntityTypeMapping TypeName="DEMO2020Model.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="Region" ColumnName="Region" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />

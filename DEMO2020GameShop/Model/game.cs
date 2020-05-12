@@ -27,7 +27,7 @@ namespace DEMO2020GameShop.Model
         public string Info { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string Logo1 { get; set; }
-        public string Logo { get; set; }
+        public byte[] Logo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<gameCategory> gameCategory { get; set; }

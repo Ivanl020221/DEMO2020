@@ -18,6 +18,7 @@ namespace DEMO2020GameShop.Model
         public Region()
         {
             this.regionGame = new HashSet<regionGame>();
+            this.user = new HashSet<user>();
         }
     
         public long ID { get; set; }
@@ -25,5 +26,7 @@ namespace DEMO2020GameShop.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<regionGame> regionGame { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user> user { get; set; }
     }
 }

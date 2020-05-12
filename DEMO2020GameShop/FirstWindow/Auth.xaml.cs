@@ -137,6 +137,7 @@ namespace DEMO2020GameShop.FirstWindow
 
         private void Reset(object sender, RoutedEventArgs e)
         {
+
             SetCapchText();
         }
 
