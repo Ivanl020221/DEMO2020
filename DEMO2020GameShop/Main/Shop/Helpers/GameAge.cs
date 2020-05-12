@@ -15,7 +15,6 @@ namespace DEMO2020GameShop.Main.Shop.Helpers
                 return false;
             if (age < 13 && limit.ID == 1)
                 return false;
-
             return true;
         }
     }

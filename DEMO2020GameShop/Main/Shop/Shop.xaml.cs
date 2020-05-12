@@ -23,17 +23,20 @@ namespace DEMO2020GameShop.Main.Shop
     {
         Model.DEMO2020Entities context = new Model.DEMO2020Entities();
 
+        private WrapPanel wrapPanel;
+
         public Shop()
         {
             InitializeComponent();
-            var game = context.game.ToList()
+            var game = context.gamelib.ToList().
+                GroupBy(i => i.game1).Select(i => new { games = i.Key, count = i.Count() }).OrderByDescending(i => i.count)
                 .Select(i =>
                 new GameRegionPrice
                 {
-                    Game = i,
-                    Price = i.regionGame.Where(g => g.region == Main.User.Region).FirstOrDefault().price,
+                    Game = i.games,
+                    Price = i.games.regionGame.Where(g => g.region == Main.User.Region).FirstOrDefault().price,
                     Limit = Helpers.GameAge.IsAgeComplete(Main.User.DateOfBirth.Value,
-                    i.regionGame.Where(g => g.region == Main.User.Region).FirstOrDefault().ageLimit1)
+                    i.games.regionGame.Where(g => g.region == Main.User.Region).FirstOrDefault().ageLimit1)
                 });
             GameList.ItemsSource = game;
         }
@@ -52,6 +55,26 @@ namespace DEMO2020GameShop.Main.Shop
             if (GameList.SelectedItem is GameRegionPrice game)
             {
             }
+        }
+
+        private void Shops_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (wrapPanel != null)
+            {
+                Size();
+            }
+        }
+
+        private void Size()
+        {
+            var window = (Main)Window.GetWindow(this);
+            wrapPanel.Width = window.Width;
+        }
+
+        private void WrapPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            wrapPanel = sender as WrapPanel;
+            Size();
         }
     }
 
